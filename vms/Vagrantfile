@@ -1,0 +1,50 @@
+Vagrant.configure("2") do |config|
+
+  # MANAGER NODES
+  vm_managers = ['manager-k8s-01', 'manager-k8s-02', 'manager-k8s-03']
+
+  vm_managers.each do |vm_manager|
+    config.vm.define vm_manager do |manager|
+      manager.vm.hostname = vm_manager
+      manager.vm.box = "ubuntu/focal64"
+      manager.vm.network "public_network"
+      
+      manager.vm.provider "virtualbox" do |vb|
+        vb.memory = 2048
+        vb.cpus = 2
+      end
+
+    end
+  end
+
+  # WORKER NODES
+  vm_workers = ['worker-k8s-01', 'worker-k8s-02', 'worker-k8s-03']
+
+  vm_workers.each do |vm_worker|
+    config.vm.define vm_worker do |worker|
+      worker.vm.hostname = vm_worker
+      worker.vm.box = "ubuntu/focal64"
+      worker.vm.network "public_network"
+      
+      worker.vm.provider "virtualbox" do |vb|
+        vb.memory = 2048
+        vb.cpus = 2
+      end
+      
+    end
+  end
+
+  # HAPROXY NODE
+  config.vm.define "haproxy" do |haproxy|
+    haproxy.vm.provider "virtualbox" do |vb|
+      vb.memory = 1024
+      vb.cpus = 1
+    end
+
+    haproxy.vm.box = "ubuntu/focal64"
+    haproxy.vm.hostname = "haproxy"
+    haproxy.vm.network "public_network"
+
+  end
+
+end
