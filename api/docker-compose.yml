@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  node-api:
+    container_name: node-api
+    image: gabrielroque/api-node-example:v1
+    command: sh -c "npm start"
+    ports:
+      - 8080:8080
