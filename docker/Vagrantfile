@@ -1,10 +1,11 @@
-# INTERNAL NETWORK MASTERS
-IP_NW="10.0.0."
-IP_START=10
-NUM_MASTERS_NODES=2
-
 # PUBLIC NETWORK MASTERS
 IP_PUB_NW="192.168.0."
+
+IP_START_MASTERS=10
+NUM_MASTERS_NODES=2
+
+IP_START_WORKER=20
+NUM_WORKERS_NODES=3
 
 Vagrant.configure("2") do |config|
 
@@ -14,8 +15,7 @@ Vagrant.configure("2") do |config|
   # # MASTER NODE
   config.vm.define "master-01" do |master|
     master.vm.hostname = "master-01"
-    # master.vm.network "private_network", ip: IP_NW + "#{IP_START+1}"
-    master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START+1}", bridge: "enp5s0"
+    master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+1}", bridge: "enp5s0"
 
     master.vm.provider "virtualbox" do |vb|
         vb.memory = 2048
@@ -31,9 +31,7 @@ Vagrant.configure("2") do |config|
   (1..NUM_MASTERS_NODES).each do |i|
     config.vm.define "master-0#{i+1}" do |master|
       master.vm.hostname = "master-0#{i+1}"
-
-      # master.vm.network "private_network", ip: IP_NW + "#{IP_START+i+1}"
-      master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START+i+1}", bridge: "enp5s0"
+      master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+i+1}", bridge: "enp5s0"
       
       master.vm.provider "virtualbox" do |vb|
         vb.memory = 2048
@@ -45,22 +43,22 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # # WORKER NODES
-  # vm_workers = ['worker-01', 'worker-02']
+  # WORKER NODES
+  (1..NUM_WORKERS_NODES).each do |i|
+    config.vm.define "worker-0#{i}" do |worker|
+      worker.vm.hostname = "worker-0#{i}"
+      worker.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_WORKER+1}", bridge: "enp5s0"
+      
+      worker.vm.provider "virtualbox" do |vb|
+        vb.memory = 1024
+        vb.cpus = 2
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      end
+      worker.vm.provision "shell", path: "scripts/common.sh"
+      worker.vm.provision "shell", path: "scripts/join-worker.sh"
+    end
+  end
 
-  # vm_workers.each do |vm_worker|
-  #   config.vm.define vm_worker do |worker|
-  #     worker.vm.hostname = vm_worker
-  #     worker.vm.box = "ubuntu/focal64"
-  #     worker.vm.network "public_network"
-      
-  #     worker.vm.provider "virtualbox" do |vb|
-  #       vb.memory = 2048
-  #       vb.cpus = 2
-  #     end
-      
-  #   end
-  # end
 
   # # HAPROXY NODE
   # config.vm.define "haproxy" do |haproxy|
