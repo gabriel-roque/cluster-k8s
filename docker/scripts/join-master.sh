@@ -1,0 +1,1 @@
+/bin/bash /vagrant/configs/master-join.sh -v

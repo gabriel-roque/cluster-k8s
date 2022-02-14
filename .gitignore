@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=terraform
 
 k8s/vms/configs
+docker/configs
 
 .vagrant/
 

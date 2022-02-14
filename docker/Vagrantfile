@@ -1,50 +1,78 @@
+# INTERNAL NETWORK MASTERS
+IP_NW="10.0.0."
+IP_START=10
+NUM_MASTERS_NODES=2
+
+# PUBLIC NETWORK MASTERS
+IP_PUB_NW="192.168.0."
+
 Vagrant.configure("2") do |config|
 
-  # MANAGER NODES
-  vm_managers = ['manager-01', 'manager-02']
+  config.vm.box = "ubuntu/focal64"
+  config.vm.box_check_update = false
 
-  vm_managers.each do |vm_manager|
-    config.vm.define vm_manager do |manager|
-      manager.vm.hostname = vm_manager
-      manager.vm.box = "ubuntu/focal64"
-      manager.vm.network "public_network"
-      
-      manager.vm.provider "virtualbox" do |vb|
+  # # MASTER NODE
+  config.vm.define "master-01" do |master|
+    master.vm.hostname = "master-01"
+    # master.vm.network "private_network", ip: IP_NW + "#{IP_START+1}"
+    master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START+1}", bridge: "enp5s0"
+
+    master.vm.provider "virtualbox" do |vb|
         vb.memory = 2048
         vb.cpus = 2
-      end
-
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     end
+
+    master.vm.provision "shell", path: "scripts/common.sh"
+    master.vm.provision "shell", path: "scripts/master.sh"
   end
 
-  # WORKER NODES
-  vm_workers = ['worker-01', 'worker-02']
+  # MORE MASTER NODES
+  (1..NUM_MASTERS_NODES).each do |i|
+    config.vm.define "master-0#{i+1}" do |master|
+      master.vm.hostname = "master-0#{i+1}"
 
-  vm_workers.each do |vm_worker|
-    config.vm.define vm_worker do |worker|
-      worker.vm.hostname = vm_worker
-      worker.vm.box = "ubuntu/focal64"
-      worker.vm.network "public_network"
+      # master.vm.network "private_network", ip: IP_NW + "#{IP_START+i+1}"
+      master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START+i+1}", bridge: "enp5s0"
       
-      worker.vm.provider "virtualbox" do |vb|
+      master.vm.provider "virtualbox" do |vb|
         vb.memory = 2048
         vb.cpus = 2
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       end
+      master.vm.provision "shell", path: "scripts/common.sh"
+      master.vm.provision "shell", path: "scripts/join-master.sh"
+    end
+  end
+
+  # # WORKER NODES
+  # vm_workers = ['worker-01', 'worker-02']
+
+  # vm_workers.each do |vm_worker|
+  #   config.vm.define vm_worker do |worker|
+  #     worker.vm.hostname = vm_worker
+  #     worker.vm.box = "ubuntu/focal64"
+  #     worker.vm.network "public_network"
       
-    end
-  end
+  #     worker.vm.provider "virtualbox" do |vb|
+  #       vb.memory = 2048
+  #       vb.cpus = 2
+  #     end
+      
+  #   end
+  # end
 
-  # HAPROXY NODE
-  config.vm.define "haproxy" do |haproxy|
-    haproxy.vm.provider "virtualbox" do |vb|
-      vb.memory = 1024
-      vb.cpus = 1
-    end
+  # # HAPROXY NODE
+  # config.vm.define "haproxy" do |haproxy|
+  #   haproxy.vm.provider "virtualbox" do |vb|
+  #     vb.memory = 1024
+  #     vb.cpus = 1
+  #   end
 
-    haproxy.vm.box = "ubuntu/focal64"
-    haproxy.vm.hostname = "haproxy"
-    haproxy.vm.network "public_network"
+  #   haproxy.vm.box = "ubuntu/focal64"
+  #   haproxy.vm.hostname = "haproxy"
+  #   haproxy.vm.network "public_network"
 
-  end
+  # end
 
 end
