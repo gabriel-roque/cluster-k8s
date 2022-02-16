@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/focal64"
   config.vm.box_check_update = false
 
-  # # MASTER NODE
+  # MASTER NODE
   config.vm.define "master-01" do |master|
     master.vm.hostname = "master-01"
     master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+1}", bridge: "enp5s0"
@@ -60,17 +60,17 @@ Vagrant.configure("2") do |config|
   end
 
 
-  # # HAPROXY NODE
-  # config.vm.define "haproxy" do |haproxy|
-  #   haproxy.vm.provider "virtualbox" do |vb|
-  #     vb.memory = 1024
-  #     vb.cpus = 1
-  #   end
+  # HAPROXY NODE
+  config.vm.define "haproxy" do |haproxy|
+    haproxy.vm.hostname = "haproxy"
 
-  #   haproxy.vm.box = "ubuntu/focal64"
-  #   haproxy.vm.hostname = "haproxy"
-  #   haproxy.vm.network "public_network"
-
-  # end
+    haproxy.vm.provider "virtualbox" do |vb|
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    end
+    haproxy.vm.network "public_network", ip: IP_PUB_NW + "200", bridge: "enp5s0"
+    haproxy.vm.provision "shell", path: "scripts/haproxy.sh"
+  end
 
 end
