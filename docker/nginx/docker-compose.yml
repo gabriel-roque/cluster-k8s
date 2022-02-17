@@ -1,0 +1,34 @@
+version: '3.8'
+
+networks:
+  application:
+    driver: overlay
+    attachable: true
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: always
+    volumes:
+      - ./conf.d/:/etc/nginx/conf.d/
+    networks:
+      - application
+    depends_on:
+      - node-api
+    ports:
+      - 80:80
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+  node-api:
+    container_name: node-api
+    image: gabrielroque/api-node-example:v1
+    command: sh -c "npm start"
+    networks:
+      - application
+    ports:
+      - 8080:8080

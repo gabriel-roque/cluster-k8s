@@ -18,13 +18,15 @@ Vagrant.configure("2") do |config|
     master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+1}", bridge: "enp5s0"
 
     master.vm.provider "virtualbox" do |vb|
-        vb.memory = 2048
+        vb.memory = 4096
         vb.cpus = 2
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     end
 
     master.vm.provision "shell", path: "scripts/common.sh"
     master.vm.provision "shell", path: "scripts/master.sh"
+    master.vm.provision "shell", inline: "sudo docker network create -d overlay application"
+    master.vm.provision "file", source: "./nginx/", destination: "~/nginx"
   end
 
   # MORE MASTER NODES
@@ -34,7 +36,7 @@ Vagrant.configure("2") do |config|
       master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+i+1}", bridge: "enp5s0"
       
       master.vm.provider "virtualbox" do |vb|
-        vb.memory = 2048
+        vb.memory = 4096
         vb.cpus = 2
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       end
@@ -50,7 +52,7 @@ Vagrant.configure("2") do |config|
       worker.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_WORKER+1}", bridge: "enp5s0"
       
       worker.vm.provider "virtualbox" do |vb|
-        vb.memory = 1024
+        vb.memory = 2028
         vb.cpus = 2
         vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       end
