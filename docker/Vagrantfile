@@ -1,11 +1,11 @@
-# PUBLIC NETWORK MASTERS
 IP_PUB_NW="192.168.0."
+IP_NW="10.0.0."
 
 IP_START_MASTERS=10
 NUM_MASTERS_NODES=2
 
 IP_START_WORKER=20
-NUM_WORKERS_NODES=3
+NUM_WORKERS_NODES=2
 
 Vagrant.configure("2") do |config|
 
@@ -15,12 +15,12 @@ Vagrant.configure("2") do |config|
   # MASTER NODE
   config.vm.define "master-01" do |master|
     master.vm.hostname = "master-01"
+    master.vm.network "private_network", ip: IP_NW + "#{IP_START_MASTERS+1}"
     master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+1}", bridge: "enp5s0"
 
     master.vm.provider "virtualbox" do |vb|
         vb.memory = 4096
         vb.cpus = 2
-        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     end
 
     master.vm.provision "shell", path: "scripts/common.sh"
@@ -33,12 +33,12 @@ Vagrant.configure("2") do |config|
   (1..NUM_MASTERS_NODES).each do |i|
     config.vm.define "master-0#{i+1}" do |master|
       master.vm.hostname = "master-0#{i+1}"
+      master.vm.network "private_network", ip: IP_NW + "#{IP_START_MASTERS+i+1}"
       master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+i+1}", bridge: "enp5s0"
       
       master.vm.provider "virtualbox" do |vb|
         vb.memory = 4096
         vb.cpus = 2
-        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       end
       master.vm.provision "shell", path: "scripts/common.sh"
       master.vm.provision "shell", path: "scripts/join-master.sh"
@@ -49,12 +49,12 @@ Vagrant.configure("2") do |config|
   (1..NUM_WORKERS_NODES).each do |i|
     config.vm.define "worker-0#{i}" do |worker|
       worker.vm.hostname = "worker-0#{i}"
+      worker.vm.network "private_network", ip: IP_NW + "#{IP_START_WORKER+1}"
       worker.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_WORKER+1}", bridge: "enp5s0"
       
       worker.vm.provider "virtualbox" do |vb|
         vb.memory = 2028
         vb.cpus = 2
-        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       end
       worker.vm.provision "shell", path: "scripts/common.sh"
       worker.vm.provision "shell", path: "scripts/join-worker.sh"
