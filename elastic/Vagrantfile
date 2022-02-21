@@ -1,0 +1,19 @@
+IP="192.168.0.150"
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/focal64"
+  config.vm.box_check_update = false
+
+  # ELASTIC NODE
+  config.vm.define "elastic" do |elastic|
+    elastic.vm.hostname = "elastic"
+
+    elastic.vm.provider "virtualbox" do |vb|
+      vb.memory = 4096
+      vb.cpus = 1
+    end
+    elastic.vm.network "public_network", ip: IP, bridge: "enp5s0"
+  end
+
+end
