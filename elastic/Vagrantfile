@@ -14,6 +14,10 @@ Vagrant.configure("2") do |config|
       vb.cpus = 1
     end
     elastic.vm.network "public_network", ip: IP, bridge: "enp5s0"
+
+    elastic.vm.provision "shell", path: "scripts/common.sh"
+    elastic.vm.provision "file", source: "./config/", destination: "~/elastic/config"
+    elastic.vm.provision "file", source: "./docker-compose.yml", destination: "~/elastic/docker-compose.yml"
   end
 
 end
