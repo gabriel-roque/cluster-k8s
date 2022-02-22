@@ -4,9 +4,9 @@ outputs:
   default:
     type: elasticsearch
     hosts:
-      - "http://localhost:9200"
-    username: "{ES_USERNAME}"
-    password: "{ES_PASSWORD}"
+      - "http://192.168.0.150:9200"
+    username: "elastic"
+    password: "admin123"
 output_permissions:
   default:
     _elastic_agent_monitoring:
