@@ -7,7 +7,9 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "dotenv": "^16.0.0",
     "elastic-apm-node": "^3.29.0",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "faker": "^5.5.3"
   }
 }

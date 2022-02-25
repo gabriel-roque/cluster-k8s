@@ -1,0 +1,670 @@
+id: 2016d7cc-135e-5583-9758-3ba01f5a06e5
+revision: 4
+outputs:
+  default:
+    type: elasticsearch
+    hosts:
+      - "http://192.168.0.150:9200"
+    username: "elastic"
+    password: "admin123"
+output_permissions:
+  default:
+    _elastic_agent_monitoring:
+      indices:
+        - names:
+            - metrics-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.auditbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.apm_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.apm_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.endpoint_security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.osquerybeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.elastic_agent-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.packetbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.fleet_server-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.filebeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.endpoint_security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.osquerybeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.metricbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-elastic_agent.heartbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-elastic_agent.heartbeat-default
+          privileges:
+            - auto_configure
+            - create_doc
+    _elastic_agent_checks:
+      cluster:
+        - monitor
+    system-1:
+      indices:
+        - names:
+            - logs-system.auth-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.syslog-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.application-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.security-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-system.system-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.cpu-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.diskio-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.filesystem-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.fsstat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.load-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.memory-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.network-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.process-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.process.summary-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.socket_summary-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-system.uptime-default
+          privileges:
+            - auto_configure
+            - create_doc
+    Linux Metrics:
+      indices:
+        - names:
+            - metrics-linux.network_summary-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-linux.iostat-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-linux.memory-default
+          privileges:
+            - auto_configure
+            - create_doc
+    Docker Agent:
+      indices:
+        - names:
+            - metrics-docker.container-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-docker.cpu-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-docker.diskio-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-docker.event-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-docker.healthcheck-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-docker.info-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-docker.memory-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-docker.network-default
+          privileges:
+            - auto_configure
+            - create_doc
+    apm:
+      indices:
+        - names:
+            - metrics-apm.app.*-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - logs-apm.error-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-apm.internal-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - metrics-apm.profiling-default
+          privileges:
+            - auto_configure
+            - create_doc
+        - names:
+            - traces-apm.sampled-default
+          privileges:
+            - auto_configure
+            - create_doc
+            - maintenance
+            - monitor
+            - read
+        - names:
+            - traces-apm-default
+          privileges:
+            - auto_configure
+            - create_doc
+      cluster:
+        - "cluster:monitor/main"
+agent:
+  monitoring:
+    enabled: true
+    use_output: default
+    namespace: default
+    logs: true
+    metrics: true
+inputs:
+  - id: default-system-policy
+    name: system-1
+    revision: 1
+    type: logfile
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.6.4
+    data_stream:
+      namespace: default
+    streams:
+      - id: logfile-system.auth-default-system-policy
+        data_stream:
+          dataset: system.auth
+          type: logs
+        paths:
+          - /var/log/auth.log*
+          - /var/log/secure*
+        exclude_files:
+          - .gz$
+        multiline:
+          pattern: ^\s
+          match: after
+        processors:
+          - add_locale: null
+      - id: logfile-system.syslog-default-system-policy
+        data_stream:
+          dataset: system.syslog
+          type: logs
+        paths:
+          - /var/log/messages*
+          - /var/log/syslog*
+        exclude_files:
+          - .gz$
+        multiline:
+          pattern: ^\s
+          match: after
+        processors:
+          - add_locale: null
+  - id: default-system-policy
+    name: system-1
+    revision: 1
+    type: winlog
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.6.4
+    data_stream:
+      namespace: default
+    streams:
+      - id: winlog-system.application-default-system-policy
+        name: Application
+        data_stream:
+          dataset: system.application
+          type: logs
+        condition: "${host.platform} == 'windows'"
+        ignore_older: 72h
+        tags: null
+      - id: winlog-system.security-default-system-policy
+        name: Security
+        data_stream:
+          dataset: system.security
+          type: logs
+        condition: "${host.platform} == 'windows'"
+        tags: null
+      - id: winlog-system.system-default-system-policy
+        name: System
+        data_stream:
+          dataset: system.system
+          type: logs
+        condition: "${host.platform} == 'windows'"
+        tags: null
+  - id: default-system-policy
+    name: system-1
+    revision: 1
+    type: system/metrics
+    use_output: default
+    meta:
+      package:
+        name: system
+        version: 1.6.4
+    data_stream:
+      namespace: default
+    streams:
+      - id: system/metrics-system.cpu-default-system-policy
+        data_stream:
+          dataset: system.cpu
+          type: metrics
+        metricsets:
+          - cpu
+        cpu.metrics:
+          - percentages
+          - normalized_percentages
+        period: 10s
+      - id: system/metrics-system.diskio-default-system-policy
+        data_stream:
+          dataset: system.diskio
+          type: metrics
+        metricsets:
+          - diskio
+        diskio.include_devices: null
+        period: 10s
+      - id: system/metrics-system.filesystem-default-system-policy
+        data_stream:
+          dataset: system.filesystem
+          type: metrics
+        metricsets:
+          - filesystem
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.filesystem.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.fsstat-default-system-policy
+        data_stream:
+          dataset: system.fsstat
+          type: metrics
+        metricsets:
+          - fsstat
+        period: 1m
+        processors:
+          - drop_event.when.regexp:
+              system.fsstat.mount_point: ^/(sys|cgroup|proc|dev|etc|host|lib|snap)($|/)
+      - id: system/metrics-system.load-default-system-policy
+        data_stream:
+          dataset: system.load
+          type: metrics
+        metricsets:
+          - load
+        condition: "${host.platform} != 'windows'"
+        period: 10s
+      - id: system/metrics-system.memory-default-system-policy
+        data_stream:
+          dataset: system.memory
+          type: metrics
+        metricsets:
+          - memory
+        period: 10s
+      - id: system/metrics-system.network-default-system-policy
+        data_stream:
+          dataset: system.network
+          type: metrics
+        metricsets:
+          - network
+        period: 10s
+        network.interfaces: null
+      - id: system/metrics-system.process-default-system-policy
+        data_stream:
+          dataset: system.process
+          type: metrics
+        metricsets:
+          - process
+        period: 10s
+        process.include_top_n.by_cpu: 5
+        process.include_top_n.by_memory: 5
+        process.cmdline.cache.enabled: true
+        process.cgroups.enabled: false
+        process.include_cpu_ticks: false
+        processes:
+          - .*
+      - id: system/metrics-system.process.summary-default-system-policy
+        data_stream:
+          dataset: system.process.summary
+          type: metrics
+        metricsets:
+          - process_summary
+        period: 10s
+      - id: system/metrics-system.socket_summary-default-system-policy
+        data_stream:
+          dataset: system.socket_summary
+          type: metrics
+        metricsets:
+          - socket_summary
+        period: 10s
+      - id: system/metrics-system.uptime-default-system-policy
+        data_stream:
+          dataset: system.uptime
+          type: metrics
+        metricsets:
+          - uptime
+        period: 10s
+  - id: 8c0a5325-1509-49b9-a688-9be34072cc49
+    name: Linux Metrics
+    revision: 1
+    type: system/metrics
+    use_output: default
+    meta:
+      package:
+        name: linux
+        version: 0.6.2
+    data_stream:
+      namespace: default
+    streams:
+      - id: >-
+          system/metrics-linux.network_summary-8c0a5325-1509-49b9-a688-9be34072cc49
+        data_stream:
+          dataset: linux.network_summary
+          type: metrics
+        metricsets:
+          - network_summary
+        condition: "${host.platform} == 'linux'"
+        period: 10s
+        processors:
+          - drop_fields:
+              fields: event.module
+  - id: 8c0a5325-1509-49b9-a688-9be34072cc49
+    name: Linux Metrics
+    revision: 1
+    type: linux/metrics
+    use_output: default
+    meta:
+      package:
+        name: linux
+        version: 0.6.2
+    data_stream:
+      namespace: default
+    streams:
+      - id: linux/metrics-linux.iostat-8c0a5325-1509-49b9-a688-9be34072cc49
+        data_stream:
+          dataset: linux.iostat
+          type: metrics
+        metricsets:
+          - iostat
+        condition: "${host.platform} == 'linux'"
+        period: 10s
+      - id: linux/metrics-linux.memory-8c0a5325-1509-49b9-a688-9be34072cc49
+        data_stream:
+          dataset: linux.memory
+          type: metrics
+        metricsets:
+          - memory
+        condition: "${host.platform} == 'linux'"
+        period: 10s
+  - id: a22f0154-b6dd-421b-8498-630962f2fae2
+    name: Docker Agent
+    revision: 1
+    type: docker/metrics
+    use_output: default
+    meta:
+      package:
+        name: docker
+        version: 1.2.0
+    data_stream:
+      namespace: default
+    streams:
+      - id: docker/metrics-docker.container-a22f0154-b6dd-421b-8498-630962f2fae2
+        data_stream:
+          dataset: docker.container
+          type: metrics
+        metricsets:
+          - container
+        hosts:
+          - "unix:///var/run/docker.sock"
+        period: 10s
+      - id: docker/metrics-docker.cpu-a22f0154-b6dd-421b-8498-630962f2fae2
+        data_stream:
+          dataset: docker.cpu
+          type: metrics
+        metricsets:
+          - cpu
+        hosts:
+          - "unix:///var/run/docker.sock"
+        period: 10s
+      - id: docker/metrics-docker.diskio-a22f0154-b6dd-421b-8498-630962f2fae2
+        data_stream:
+          dataset: docker.diskio
+          type: metrics
+        metricsets:
+          - diskio
+        hosts:
+          - "unix:///var/run/docker.sock"
+        period: 10s
+      - id: docker/metrics-docker.event-a22f0154-b6dd-421b-8498-630962f2fae2
+        data_stream:
+          dataset: docker.event
+          type: metrics
+        metricsets:
+          - event
+        hosts:
+          - "unix:///var/run/docker.sock"
+        period: 10s
+      - id: docker/metrics-docker.healthcheck-a22f0154-b6dd-421b-8498-630962f2fae2
+        data_stream:
+          dataset: docker.healthcheck
+          type: metrics
+        metricsets:
+          - healthcheck
+        hosts:
+          - "unix:///var/run/docker.sock"
+        period: 10s
+      - id: docker/metrics-docker.info-a22f0154-b6dd-421b-8498-630962f2fae2
+        data_stream:
+          dataset: docker.info
+          type: metrics
+        metricsets:
+          - info
+        hosts:
+          - "unix:///var/run/docker.sock"
+        period: 10s
+      - id: docker/metrics-docker.memory-a22f0154-b6dd-421b-8498-630962f2fae2
+        data_stream:
+          dataset: docker.memory
+          type: metrics
+        metricsets:
+          - memory
+        hosts:
+          - "unix:///var/run/docker.sock"
+        period: 10s
+      - id: docker/metrics-docker.network-a22f0154-b6dd-421b-8498-630962f2fae2
+        data_stream:
+          dataset: docker.network
+          type: metrics
+        metricsets:
+          - network
+        hosts:
+          - "unix:///var/run/docker.sock"
+        period: 10s
+  - id: e459e593-56fa-46c1-ae18-b15959945b19
+    name: apm
+    revision: 1
+    type: apm
+    use_output: default
+    meta:
+      package:
+        name: apm
+        version: 7.16.0
+    data_stream:
+      namespace: default
+    apm-server:
+      auth:
+        anonymous:
+          enabled: true
+          allow_agent:
+            - rum-js
+            - js-base
+            - iOS/swift
+          allow_service: null
+          rate_limit:
+            event_limit: 300
+            ip_limit: 1000
+        api_key:
+          enabled: false
+          limit: 100
+        secret_token: null
+      capture_personal_data: true
+      idle_timeout: 45s
+      default_service_environment: null
+      expvar.enabled: false
+      host: "192.168.0.150:8200"
+      max_connections: 0
+      max_event_size: 307200
+      max_header_size: 1048576
+      read_timeout: 3600s
+      response_headers: null
+      rum:
+        enabled: true
+        allow_headers: null
+        allow_origins:
+          - "*"
+        exclude_from_grouping: ^/webpack
+        library_pattern: node_modules|bower_components|~
+        response_headers: null
+        source_mapping:
+          metadata: []
+      shutdown_timeout: 30s
+      write_timeout: 30s
+      agent_config: []
