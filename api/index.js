@@ -1,14 +1,22 @@
 require('dotenv').config();
 
-const app = require('express')()
+const express = require('express')
 const faker = require('faker')
+
+const app = express()
 
 const apm = require('elastic-apm-node').start({
   serviceName: 'NODE_API',
   apiKey: process.env.ELASTIC_API_TOKEN,
   serverUrl: process.env.APM_SERVER,
   environment: 'development',
+  captureBody: 'all',
+  captureHeaders: true,
+  captureExceptions: true,
+  captureErrorLogStackTraces: true
 })
+
+app.use(express.json())
 
 app.use((req, res, next) => {
   const t = apm.startTransaction(`${req.method} ${req.path}`, { startTime: Date.now().toString() })
@@ -21,6 +29,10 @@ app.use((req, res, next) => {
 
   req.user = user
   t.addLabels(user, true)
+  t.addLabels({ 'body': JSON.stringify(req.body) }, false)
+  // TODO get query params
+  // TODO params
+  // TODO route path
   apm.setUserContext(user)
 
   apm.setCustomContext({
@@ -59,6 +71,11 @@ app.get('/delay', (req, res) => {
     req.transaction.end(req.id);
     return res.json({ message: 'Deplay Route' });
   }, 3000)
+})
+
+app.post('/post', (req, res) => {
+  req.transaction.end(req.id);
+  return res.json({ message: 'Post Route' });
 })
 
 app.listen(8080, () => console.log('API runing!'))
