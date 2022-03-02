@@ -29,10 +29,9 @@ app.use((req, res, next) => {
 
   req.user = user
   t.addLabels(user, true)
-  t.addLabels({ 'body': JSON.stringify(req.body) }, false)
-  // TODO get query params
-  // TODO params
-  // TODO route path
+  if (req.body) t.addLabels({ 'body': JSON.stringify(req.body) }, false)
+  if (req.query) t.addLabels({ 'query': JSON.stringify(req.query) }, false)
+  if (req.params) t.addLabels({ 'params': JSON.stringify(req.params) }, false)
   apm.setUserContext(user)
 
   apm.setCustomContext({
