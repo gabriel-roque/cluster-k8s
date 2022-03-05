@@ -1,3 +1,5 @@
+#! /bin/bash
+
 IP_FRIST_MASTER=$(hostname -I | awk '{print $2}')
 
 # Init Cluster Docker Swarm

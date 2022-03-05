@@ -4,6 +4,9 @@
 
 k8s/vms/configs
 docker/configs
+elastic/data/*
+!elastic/data/.gitkeep
+elastic/.env
 
 .vagrant/
 

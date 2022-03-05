@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
     master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+1}", bridge: "enp5s0"
 
     master.vm.provider "virtualbox" do |vb|
-        vb.memory = 4096
+        vb.memory = 2048
         vb.cpus = 2
     end
 
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
       master.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_MASTERS+i+1}", bridge: "enp5s0"
       
       master.vm.provider "virtualbox" do |vb|
-        vb.memory = 4096
+        vb.memory = 2048
         vb.cpus = 2
       end
       master.vm.provision "shell", path: "scripts/common.sh"

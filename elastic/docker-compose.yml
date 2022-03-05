@@ -3,7 +3,7 @@ version: '3'
 services:
   elasticsearch:
    container_name: elasticsearch
-   image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
+   image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
    restart: always
    ports:
     - 9200:9200
@@ -11,18 +11,18 @@ services:
     - elasticsearch-data:/usr/share/elasticsearch/data
     - ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
    environment:
-    - xpack.monitoring.enabled=true
+    - xpack.monitoring.templates.enabled=true
     - xpack.watcher.enabled=false
     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     - discovery.type=single-node
     - ELASTICSEARCH_USERNAME="elastic"
-    - ELASTICSEARCH_PASSWORD="admin123"
+    - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
    networks:
     - elastic
 
   kibana:
    container_name: kibana
-   image: docker.elastic.co/kibana/kibana:7.16.3
+   image: docker.elastic.co/kibana/kibana:8.0.1
    restart: always
    ports:
     - 80:5601
@@ -31,8 +31,8 @@ services:
    environment:
     - ELASTICSEARCH_URL=http://elasticsearch:9200
     - ELASTICSEARCH_HOSTS=["http://elasticsearch:9200"]
-    - ELASTICSEARCH_USERNAME="elastic"
-    - ELASTICSEARCH_PASSWORD="admin123"
+    - ELASTICSEARCH_USERNAME="kibana_system"
+    - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
    networks:
     - elastic
   
