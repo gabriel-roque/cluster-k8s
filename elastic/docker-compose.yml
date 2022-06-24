@@ -29,6 +29,9 @@ services:
    depends_on:
     - elasticsearch
    environment:
+    - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=59f4f8062f4fc86ba75f50dd234272e4
+    - XPACK_REPORTING_ENCRYPTIONKEY=72c915390ada0c1fd1d4b4e311784267
+    - XPACK_SECURITY_ENCRYPTIONKEY=10d598911b1af8b1bfd7ce0c22a90e1d
     - ELASTICSEARCH_URL=http://elasticsearch:9200
     - ELASTICSEARCH_HOSTS=["http://elasticsearch:9200"]
     - ELASTICSEARCH_USERNAME="kibana_system"
