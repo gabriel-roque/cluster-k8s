@@ -2,43 +2,45 @@ version: '3'
 
 services:
   elasticsearch:
-   container_name: elasticsearch
-   image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
-   restart: always
-   ports:
-    - 9200:9200
-   volumes:
-    - elasticsearch-data:/usr/share/elasticsearch/data
-    - ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-   environment:
-    - xpack.monitoring.templates.enabled=true
-    - xpack.watcher.enabled=false
-    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    - discovery.type=single-node
-    - ELASTICSEARCH_USERNAME="elastic"
-    - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
-   networks:
-    - elastic
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
+    restart: always
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+      - ./config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    environment:
+      - xpack.monitoring.templates.enabled=true
+      - xpack.watcher.enabled=false
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+      - discovery.type=single-node
+      - ELASTICSEARCH_USERNAME="elastic"
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+    networks:
+      - elastic
 
   kibana:
-   container_name: kibana
-   image: docker.elastic.co/kibana/kibana:8.0.1
-   restart: always
-   ports:
-    - 80:5601
-   depends_on:
-    - elasticsearch
-   environment:
-    - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=59f4f8062f4fc86ba75f50dd234272e4
-    - XPACK_REPORTING_ENCRYPTIONKEY=72c915390ada0c1fd1d4b4e311784267
-    - XPACK_SECURITY_ENCRYPTIONKEY=10d598911b1af8b1bfd7ce0c22a90e1d
-    - ELASTICSEARCH_URL=http://elasticsearch:9200
-    - ELASTICSEARCH_HOSTS=["http://elasticsearch:9200"]
-    - ELASTICSEARCH_USERNAME="kibana_system"
-    - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
-   networks:
-    - elastic
-  
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.0.1
+    restart: always
+    ports:
+      - 80:5601
+    volumes:
+      - ./config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    depends_on:
+      - elasticsearch
+    environment:
+      - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=59f4f8062f4fc86ba75f50dd234272e4
+      - XPACK_REPORTING_ENCRYPTIONKEY=72c915390ada0c1fd1d4b4e311784267
+      - XPACK_SECURITY_ENCRYPTIONKEY=10d598911b1af8b1bfd7ce0c22a90e1d
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=["http://elasticsearch:9200"]
+      - ELASTICSEARCH_USERNAME="kibana_system"
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+    networks:
+      - elastic
+
 networks:
   elastic:
     driver: bridge
