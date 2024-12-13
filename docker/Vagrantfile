@@ -1,11 +1,8 @@
-IP_PUB_NW="192.168.0."
+IP_PUB_NW="192.168.10."
 IP_NW="10.0.0."
 
 IP_START_MASTERS=10
 NUM_MASTERS_NODES=2
-
-IP_START_WORKER=20
-NUM_WORKERS_NODES=2
 
 Vagrant.configure("2") do |config|
 
@@ -44,24 +41,6 @@ Vagrant.configure("2") do |config|
       master.vm.provision "shell", path: "scripts/join-master.sh"
     end
   end
-
-  # If case you would like to add worker in your cluster
-  # # WORKER NODES
-  # (1..NUM_WORKERS_NODES).each do |i|
-  #   config.vm.define "worker-0#{i}" do |worker|
-  #     worker.vm.hostname = "worker-0#{i}"
-  #     worker.vm.network "private_network", ip: IP_NW + "#{IP_START_WORKER+1}"
-  #     worker.vm.network "public_network", ip: IP_PUB_NW + "#{IP_START_WORKER+1}", bridge: "enp5s0"
-      
-  #     worker.vm.provider "virtualbox" do |vb|
-  #       vb.memory = 2028
-  #       vb.cpus = 2
-  #     end
-  #     worker.vm.provision "shell", path: "scripts/common.sh"
-  #     worker.vm.provision "shell", path: "scripts/join-worker.sh"
-  #   end
-  # end
-
 
   # HAPROXY NODE
   config.vm.define "haproxy" do |haproxy|

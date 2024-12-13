@@ -10,7 +10,7 @@ sudo su -
 cat <<EOT >> /etc/haproxy/haproxy.cfg
 frontend docker-swarm
    mode tcp
-   bind 192.168.0.200:80
+   bind 192.168.10.200:80
    option tcplog
    default_backend docker-swarm-masters
 
