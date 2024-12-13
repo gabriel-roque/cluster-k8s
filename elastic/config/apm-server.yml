@@ -1,0 +1,12 @@
+apm-server:
+  host: "apm-server:8200"
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+  # Authentication credentials - either API key or username/password.
+  # api_key: "id:apikey"
+  username: "elastic"
+  password: ${ELASTIC_PASSWORD}
+
+ 

@@ -41,6 +41,22 @@ services:
     networks:
       - elastic
 
+  apm-server:
+    container_name: apm-server
+    image: docker.elastic.co/apm/apm-server:8.0.1
+    restart: always
+    volumes:
+      - ./config/apm-server.yml:/usr/share/apm-server/apm-server.yml
+    environment:
+      ELASTIC_PASSWORD: ${ELASTICSEARCH_PASSWORD}
+    ports:
+      - 8200:8200
+    depends_on:
+      - elasticsearch
+      - kibana
+    networks:
+      - elastic
+
 networks:
   elastic:
     driver: bridge
