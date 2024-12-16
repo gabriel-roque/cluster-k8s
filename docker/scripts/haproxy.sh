@@ -18,9 +18,9 @@ backend docker-swarm-masters
    mode tcp
    balance roundrobin
    option tcp-check
-   server master-01 192.168.11:80 check fall 3 rise 2
-   server master-02 192.168.12:80 check fall 3 rise 2
-   server master-03 192.168.13:80 check fall 3 rise 2
+   server master-01 192.168.10.11:80 check fall 3 rise 2
+   server master-02 192.168.10.12:80 check fall 3 rise 2
+   server master-03 192.168.10.13:80 check fall 3 rise 2
 EOT
 
 systemctl restart haproxy.service
