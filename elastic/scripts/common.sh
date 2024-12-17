@@ -14,3 +14,11 @@ docker version
  sudo chmod +x /usr/local/bin/docker-compose
  sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
  docker-compose --version
+
+ # Install elastic agent
+curl -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.0.1-amd64.deb
+sudo dpkg -i elastic-agent-8.0.1-amd64.deb
+
+systemctl restart elastic-agent.service
+systemctl start elastic-agent.service
+systemctl status elastic-agent.service

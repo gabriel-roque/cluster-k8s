@@ -26,4 +26,7 @@ sudo docker service logs example_node-api
 192.168.10.150 elastic.cluster
 ```
 
+Remember in configure Fleet Server
+Check de scripts/fleet-server.sh
+
 Open in http://elastic.cluster/ or local ip network

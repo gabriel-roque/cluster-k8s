@@ -22,6 +22,8 @@ Vagrant.configure("2") do |config|
 
     master.vm.provision "shell", path: "scripts/common.sh"
     master.vm.provision "shell", path: "scripts/master.sh"
+    master.vm.provision "shell", path: "scripts/elastic-agent.sh"
+    master.vm.provision "shell", path: "scripts/fleet-server.sh"
     master.vm.provision "shell", inline: "sudo docker network create -d overlay application"
     master.vm.provision "file", source: "./nginx/", destination: "~/nginx"
   end
@@ -39,6 +41,8 @@ Vagrant.configure("2") do |config|
       end
       master.vm.provision "shell", path: "scripts/common.sh"
       master.vm.provision "shell", path: "scripts/join-master.sh"
+      master.vm.provision "shell", path: "scripts/elastic-agent.sh"
+      master.vm.provision "shell", path: "scripts/fleet-server.sh"
     end
   end
 
@@ -52,6 +56,8 @@ Vagrant.configure("2") do |config|
     end
     haproxy.vm.network "public_network", ip: IP_PUB_NW + "200", bridge: "enp5s0"
     haproxy.vm.provision "shell", path: "scripts/haproxy.sh"
+    haproxy.vm.provision "shell", path: "scripts/elastic-agent.sh"
+    haproxy.vm.provision "shell", path: "scripts/fleet-server.sh"
   end
 
 end

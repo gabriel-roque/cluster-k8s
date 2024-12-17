@@ -1,6 +1,6 @@
 #! /bin/bash
 
-sudo su -
+# sudo su -
 
 sudo apt update
 sudo apt upgrade -y
@@ -9,10 +9,11 @@ sudo apt upgrade -y
 curl -fsSL https://get.docker.com | sh
 
 # Configure docker group
-groupadd docker
-usermod -aG docker $USER
-newgrp docker
-docker version
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo newgrp docker
+exit
+sudo docker version
 
 # Install Docker Compose
  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
