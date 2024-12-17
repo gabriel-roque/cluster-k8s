@@ -7,19 +7,18 @@ networks:
 
 services:
   node-api:
-      container_name: node-api
-      image: gabrielroque/api-node-example:v3
-      command: sh -c "npm start"
-      environment:
-        - ELASTIC_API_TOKEN=${ELASTIC_API_TOKEN}
-        - APM_SERVER=${APM_SERVER}
-      deploy:
-          mode: replicated
-          replicas: 3
-      networks:
-        - application
-      ports:
-        - 8080:8080
+    container_name: node-api
+    image: gabrielroque/api-node-example:v3
+    command: sh -c "npm start"
+    env_file:
+      - .env
+    deploy:
+      mode: replicated
+      replicas: 3
+    networks:
+      - application
+    ports:
+      - 8080:8080
   nginx:
     container_name: nginx
     image: gabrielroque/nginx-cluster:v1
@@ -34,4 +33,3 @@ services:
       mode: global
       placement:
         constraints: [node.role == manager]
-  
