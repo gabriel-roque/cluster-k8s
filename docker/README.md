@@ -9,7 +9,7 @@ vagrant up
 vagrant ssh master-01
 cd nginx
 
-vim .env
+sudo vim .env
 
 # IN .env
 ELASTIC_API_TOKEN=

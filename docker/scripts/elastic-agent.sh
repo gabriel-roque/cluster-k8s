@@ -3,8 +3,8 @@
 sudo su -
 
 # Install elastic agent
-curl -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.0.1-amd64.deb
-sudo dpkg -i elastic-agent-8.0.1-amd64.deb
+curl -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.10.0-amd64.deb
+sudo dpkg -i elastic-agent-8.10.0-amd64.deb
 
 systemctl stop elastic-agent.service
 systemctl start elastic-agent.service

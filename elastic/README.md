@@ -9,7 +9,7 @@ vagrant up
 vagrant ssh elastic
 cd elastic
 
-vim .env
+sudo vim .env
 
 # IN .env
 ELASTICSEARCH_PASSWORD=""
